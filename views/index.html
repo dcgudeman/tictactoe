@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic-Tac-Toe</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+<div class="container text-center">
+  <h1>TIC TAC TOE</h1>
+</div>
+<div id="animated-example" class="container grid animated fadeInDown">
+
+  <div class="row">
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+    <div class="col-xs-4 thumbnail cell"></div>
+  </div>
+
+</div>
+<div class="container text-center playerReset animated fadeInDown">
+  <h2>Player 1 wins!</h2>
+  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
+</div>
+<div class="container text-center playerReset animated fadeInDown">
+  <h2>Player 2 wins!</h2>
+  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
+</div>
+<div class="container text-center playerReset animated fadeInDown">
+  <h2>It's a draw</h2>
+  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
