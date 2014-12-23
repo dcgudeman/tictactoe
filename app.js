@@ -1,20 +1,47 @@
-var express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser');
+/*var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 app.set('view engine', 'ejs');
+app.use(express.bodyParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(express.static('./public'));
+app.use(express.static('./public'));*/
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 
+var express = require('express');
+var bodyParser = require('body-parser');
 
+var app = express();
 
+app.set('view engine', 'ejs');
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 
 app.get("/",function(req,res){
 
 
 
+  //console.log(req.body);
   var test = "David Gudeman";
+
+
+
+
+
+  res.render('index',{variable: test});
+});
+
+app.post("/",function(req,res){
+
+
+
+  console.log(req.body);
+  var test = req.body.name;
 
 
 
