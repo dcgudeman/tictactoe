@@ -1,9 +1,13 @@
+$(document).ready ( function(){
 
 var cellList = document.querySelectorAll("div.cell");
 var resetButton = document.querySelectorAll("button.resetbtn");
 var playerOutcome = document.querySelectorAll("div.playerReset");
 var player = 0;
 var yourTurn = true;
+
+var cellListFirst = $('.cell');
+console.log(cellListFirst);
 
 
 for (var i = 0; i< cellList.length; i++)
@@ -43,7 +47,7 @@ for (var i = 0; i< cellList.length; i++)
 			{
 				playerOutcome[1].classList.remove("playerReset");
 				console.log("Player 2 won!");
-			} 
+			}
 			else if (gameStatus === 0)
 			{
 				playerOutcome[2].classList.remove("playerReset");
@@ -75,7 +79,7 @@ for (var i = 0; i< cellList.length; i++)
 				{
 					playerOutcome[1].classList.remove("playerReset");
 					console.log("Player 2 won!");
-				} 
+				}
 				else if (gameStatus === 0)
 				{
 					playerOutcome[2].classList.remove("playerReset");
@@ -101,7 +105,7 @@ function gameState() {
 	var currentCellList = document.querySelectorAll("div.cell");
 
 
-	for (var i = 0; i < 9; i+=3) 
+	for (var i = 0; i < 9; i+=3)
 		if(currentCellList[i].innerHTML !== "" && currentCellList[i].innerHTML === currentCellList[i+1].innerHTML && currentCellList[i].innerHTML === currentCellList[i+2].innerHTML)
 		{
 			if(currentCellList[i].innerHTML === "X")
@@ -155,7 +159,7 @@ for(var i = 0; i < 3; i++)
 	resetButton[i].addEventListener("click",function() {
 
 		console.log("button has been pressed!");
-		
+
 		for(var i=0; i < cellList.length; i++)
 			cellList[i].innerHTML="";
 
@@ -169,7 +173,7 @@ for(var i = 0; i < 3; i++)
 function computerChoice() {
 	var cellListCurrent = document.querySelectorAll("div.cell");
 	var openSquares = [];
-	
+
 	for (var i = 0; i < cellListCurrent.length; i++)
 		if (cellListCurrent[i].innerHTML === "")
 			openSquares.push(i);
@@ -212,7 +216,7 @@ function computerChoice2() {
 	var tempArrayOfValues = [];
 	var firstXCount =0;
 	var firstOCount =0;
-	
+
 	for (var i = 0; i < cellListCurrent.length; i++)
 	{
 		tempArrayOfValues.push(cellListCurrent[i].innerHTML);
@@ -323,7 +327,7 @@ function choiceRanker (arrayOfValues, possChoice, Xcount, Ocount) {
 		runningTotal = runningTotal + choiceRanker(newArrayOfValues,openSquares[i],newXcount,newOcount);
 
 	return runningTotal;
-		
+
 
 
 
@@ -382,7 +386,7 @@ function choiceRanker2 (arrayOfValues, possChoice, depth) {
 		runningTotal = runningTotal + choiceRanker(newArrayOfValues,openSquares[i],newDepth);
 
 	return runningTotal;
-		
+
 
 
 
@@ -390,7 +394,7 @@ function choiceRanker2 (arrayOfValues, possChoice, depth) {
 
 function detectWin(arry)
 {
-	for (var i = 0; i < 9; i+=3) 
+	for (var i = 0; i < 9; i+=3)
 		if(arry[i] !== "" && arry[i] === arry[i+1] && arry[i] === arry[i+2])
 		{
 			if(arry[i] === "X")
@@ -439,6 +443,9 @@ function detectWin(arry)
 }
 
 
+
+
+});
 
 
 

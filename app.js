@@ -1,26 +1,16 @@
-/*var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-app.set('view engine', 'ejs');
-app.use(express.bodyParser());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use(express.static('./public'));*/
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
 
 var express = require('express');
 var bodyParser = require('body-parser');
-
 var app = express();
-
 app.set('view engine', 'ejs');
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
 app.use(bodyParser.json());
-app.use( express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
+
+
+
 
 
 app.get("/",function(req,res){
@@ -42,13 +32,13 @@ app.post("/",function(req,res){
 
 
   console.log(req.body);
-  var test = req.body.name;
+  var test = req.body.gamestate;
 
 
 
 
-
-  res.render('index',{variable: test});
+  res.json({gamestate: req.body.gamestate, index: req.body.index});
+  //res.render({variable: test});
 });
 
 
