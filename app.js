@@ -13,11 +13,31 @@ app.use(express.static(__dirname + '/public'));
 
 
 io.on('connection', function(socket){
+
+  var game = "         ";
+
+
   console.log('a user connected');
-  socket.on('chat message', function(msg){
-    console.log(msg);
-    io.emit('chat message', msg);
+
+
+  socket.on('choice', function (req) {
+
+
+    var index = parseInt(req.index);
+
+    game = req.gamestate.substring(0,index) + "X" + req.gamestate.substring(index+1);
+
+    console.log(game);
+
+
+    io.emit('gotnewboard', {gamestate: game, index: index});
   });
+
+
+
+
+
+  socket.on('disconnect', function () { });
 });
 
 

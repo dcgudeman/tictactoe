@@ -1,5 +1,7 @@
 $(document).ready ( function(){
 
+  var socket = io();
+
 
   var gamestate = "         ";
 
@@ -23,7 +25,8 @@ $(document).ready ( function(){
       console.log($(element).text());
       if($(element).text() === "")
       {
-        $.ajax({
+        socket.emit('choice', {gamestate: gamestate, index: index});
+/*        $.ajax({
           type: "POST",
           url:"http://localhost:3000",
           dataType: "json",
@@ -44,11 +47,21 @@ $(document).ready ( function(){
         function(jqXHR, textStatus, errorThrown){
           console.log(errorThrown);
           console.log("error");
-        });
+        });*/
       }
 
     });
   });
+
+  socket.on('gotnewboard', function (data) {
+
+    console.log(data);
+    gamestate = data.gamestate;
+    setBoard();
+
+    });
+
+
 
 
 
