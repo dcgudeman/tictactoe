@@ -22,6 +22,9 @@ $(document).ready ( function(){
         $(element).text(gamestate[index]);
     });
   };
+  $('#myModal').on('hidden.bs.modal', function (e) {
+    window.location.pathname = "/";
+  });
 
 
   $('.cell').each(function(index, element){
@@ -65,6 +68,9 @@ $(document).ready ( function(){
     whosTurn = data.whosTurn;
     gamestate = data.gamestate;
     console.log(data.gameover);
+    if(data.gameover !== -1)
+      $('#myModal').modal('show');
+
     setBoard();
 
   });

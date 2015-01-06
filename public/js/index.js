@@ -24,7 +24,9 @@ $(document).ready ( function(){
  $(".client").on('click',function(event){
     event.preventDefault();
     //socket.emit('clients');
-    console.log(socket);
+    //console.log(socket);
+    var r = window.confirm("sometext");
+    console.log(r);
   });
 
 

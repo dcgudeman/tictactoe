@@ -108,13 +108,14 @@ game.on('connection',function(socket){
     var roomid = "";
     var gameover = -1;
     whosTurn = data.whosTurn;
+
     if(roomsArray.length>1)
       roomid = roomsArray[1];
     else
       roomid = roomsArray[0];
 
-    console.log("roomsArray: ",roomsArray);
-    console.log("roomsArray.length: ",roomsArray.length);
+    //console.log("roomsArray: ",roomsArray);
+    //console.log("roomsArray.length: ",roomsArray.length);
     //console.log(data);
     //console.log(data.gamestate);
     //console.log(data.index);
@@ -207,13 +208,7 @@ io.on('connection', function(socket){
 
 app.get("/", function(req,res){
 
-
-
-  //console.log(req.body);
-  var test = "David Gudeman";
   var clients = findClientsSocket(null, '/game');
-
-  console.log(clients);
 
   res.render('index',{clients: clients});
 });
