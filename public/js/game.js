@@ -2,9 +2,7 @@
 
 $(document).ready ( function(){
 
-  //var socket = io();
   var socket = io('/game');
-
   var urlArray = window.location.pathname.split("/");
   var roomid = "";
 
@@ -15,21 +13,11 @@ $(document).ready ( function(){
   }
 
 
-  //socket.emit();
-
-
   var gamestate = "         ";
   var whosTurn = 1;
 
-/*  var joinroom = function(roomid){
-    socket.emit('joinroom',roomid);
-  };*/
-
-
-
   var setBoard = function(){
     $('.cell').each(function(index, element){
-      //$(element).val(gamestate[index]);
       if(gamestate[index] !== " ")
         $(element).text(gamestate[index]);
     });

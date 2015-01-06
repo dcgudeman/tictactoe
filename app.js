@@ -35,10 +35,6 @@ var findClientsSocket = function (roomId, namespace) {
 
 var gameStatus = function(gamestate) {
 
-
-  //var gamestate = document.querySelectorAll("div.cell");
-
-
   for (var i = 0; i < 9; i+=3)
     if(gamestate[i] !== " " && gamestate[i] === gamestate[i+1] && gamestate[i] === gamestate[i+2])
     {
@@ -152,16 +148,15 @@ game.on('connection',function(socket){
 
 
 
-
-
-
-
   socket.on('disconnect', function () {
     console.log("game user disconnected");
   });
 });
 
-console.log(game);
+
+
+
+
 
 io.on('connection', function(socket){
 
