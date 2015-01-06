@@ -1,9 +1,29 @@
+
+
 $(document).ready ( function(){
 
-  var socket = io();
+  //var socket = io();
+  var socket = io('/game');
+
+  var urlArray = window.location.pathname.split("/");
+  var roomid = "";
+
+  if(urlArray.length > 2)
+  {
+    roomid = urlArray[2];
+    socket.emit('joinroom',roomid);
+  }
+
+
+  //socket.emit();
 
 
   var gamestate = "         ";
+  var whosTurn = 1;
+
+/*  var joinroom = function(roomid){
+    socket.emit('joinroom',roomid);
+  };*/
 
 
 
@@ -16,8 +36,6 @@ $(document).ready ( function(){
   };
 
 
-
-
   $('.cell').each(function(index, element){
 
     $(element).on('click',function(event){
@@ -25,7 +43,7 @@ $(document).ready ( function(){
       console.log($(element).text());
       if($(element).text() === "")
       {
-        socket.emit('choice', {gamestate: gamestate, index: index});
+        socket.emit('choice', {gamestate: gamestate, index: index, whosTurn: whosTurn});
 /*        $.ajax({
           type: "POST",
           url:"http://localhost:3000",
@@ -56,10 +74,12 @@ $(document).ready ( function(){
   socket.on('gotnewboard', function (data) {
 
     console.log(data);
+    whosTurn = data.whosTurn;
     gamestate = data.gamestate;
+    console.log(data.gameover);
     setBoard();
 
-    });
+  });
 
 
 

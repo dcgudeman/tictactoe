@@ -133,13 +133,12 @@ function gameState() {
 	}
 
 	if(currentCellList[2].innerHTML !== "" && currentCellList[2].innerHTML === currentCellList[4].innerHTML && currentCellList[2].innerHTML === currentCellList[6].innerHTML)
-		return currentCellList[2].innerHTML;
-/*	{
+	{
 			if(currentCellList[2].innerHTML === "X")
 				return "X";
 			else
 				return "O";
-	}*/
+	}
 
 	var count = 0;
 

@@ -14,47 +14,34 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <script src="/js/front.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/indexstyle.css">
   <script src="/js/socket.io-1.2.1.js"></script>
+  <script src="/js/index.js"></script>
+
 
 </head>
 <body>
 
- <div class="container text-center">
+<div class="container text-center">
   <h1>TIC TAC TOE</h1>
 </div>
-<div id="animated-example" class="container grid animated fadeInDown">
 
-  <div class="row">
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
+<div class="main text-center container">
+
+<div class="row">
+  <div class="col-xs-4 thumbnail cell">
+    <ul id="opengames">
+      <% clients.forEach(function(element){ %>
+        <li><a href=<%= "/game/"+element.id %>><%= element.id  %></a></li>
+      <% }); %>
+    </ul>
   </div>
-  <div class="row">
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
-  </div>
-  <div class="row">
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
-    <div class="col-xs-4 thumbnail cell"></div>
-  </div>
+  <div class="col-xs-4 thumbnail cell">This is my very own implimentation of Tic Tac Toe. You have the choice of playing another person or playing against the computer.</div>
+  <div class="col-xs-4 thumbnail cell"><a href="/newgame" class="btn btn-default newgame">NEW GAME</a><a href="" class="btn btn-default client">TEST</a></div>
+</div>
 
 </div>
-<!-- <div class="container text-center playerReset animated fadeInDown">
-  <h2>Player 1 wins!</h2>
-  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
-</div>
-<div class="container text-center playerReset animated fadeInDown">
-  <h2>Player 2 wins!</h2>
-  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
-</div>
-<div class="container text-center playerReset animated fadeInDown">
-  <h2>It's a draw</h2>
-  <button type="button" class="btn btn-primary btn-lg resetbtn">Play Again?</button>
-</div> -->
+
 
 </body>
 </html>
