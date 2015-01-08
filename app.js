@@ -107,6 +107,7 @@ game.on('connection',function(socket){
     var roomsArray = socket.rooms;
     var roomid = "";
     var gameover = -1;
+    var index = parseInt(data.index);
     whosTurn = data.whosTurn;
 
     if(roomsArray.length>1)
@@ -114,17 +115,7 @@ game.on('connection',function(socket){
     else
       roomid = roomsArray[0];
 
-    //console.log("roomsArray: ",roomsArray);
-    //console.log("roomsArray.length: ",roomsArray.length);
-    //console.log(data);
-    //console.log(data.gamestate);
-    //console.log(data.index);
 
-    var index = parseInt(data.index);
-
-    console.log(whosTurn);
-
-    //console.log(index);
     if(whosTurn%2 === 1 && roomsArray.length === 1)
     {
       gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
@@ -141,9 +132,6 @@ game.on('connection',function(socket){
       gameover = gameStatus(gameVar);
       game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
     }
-
-
-    //console.log(gameVar);
 
   });
 
@@ -162,44 +150,6 @@ game.on('connection',function(socket){
 io.on('connection', function(socket){
 
 
-
-
-
-  //console.log("rooms -> ",socket.rooms);
-  //console.log("client -> ",socket.client);
-  //var clients = io.of('/chat').clients();
-  //var clients = io.of('/chat').clients('room'); // all users from room `room`
-  //var clients = io.sockets;
-  //var clients = io.sockets.clients('room'); // all users from room `room`
-  //console.log(clients);
-  //console.log("user connnected");
-
-  /*socket.on('clients',function (data) {
-    //console.log(io.sockets.connected);
-    //console.log(io.sockets.sockets[0].rooms);
-    //console.log(io);
-    console.log(findClientsSocket());
-
-  });
-
-  socket.on('game',function(data){
-    var game = "         ";
-
-
-    socket.on('choice', function (req) {
-
-      var index = parseInt(req.index);
-
-      game = req.gamestate.substring(0,index) + "X" + req.gamestate.substring(index+1);
-
-      console.log(game);
-
-      io.emit('gotnewboard', {gamestate: game, index: index});
-    });
-
-  });
-*/
-
   socket.on('disconnect', function () {
     console.log("user disconnected");
   });
@@ -216,7 +166,6 @@ app.get("/", function(req,res){
 
 app.get("/newgame",function(req,res){
 
-  //game.emit('opengame',{roomid: socket.id});
   res.render('game', {newgame: true});
 });
 
@@ -224,30 +173,12 @@ app.get("/game/:roomid", function(req,res){
 
   var roomid = req.params.roomid;
 
-  //game.socket.join(roomid);
-
-
-
-
-
-  //console.log(req.body);
-  var test = "David Gudeman";
   var clients = findClientsSocket(roomid, '/game');
 
   console.log(clients);
 
   res.render('game');
 });
-/*app.post("/",function(req,res){
-  console.log(req.body);
-  var index = parseInt(req.body.index);
-  var gamestate = req.body.gamestate.substring(0,index) + "X" +req.body.gamestate.substring(index+1);
-  res.json({gamestate: gamestate, index: index});
-  //res.render({variable: test});
-});*/
-
-
-
 
 
 

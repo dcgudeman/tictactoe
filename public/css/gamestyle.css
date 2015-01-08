@@ -21,7 +21,18 @@ body {
 
 .playerReset {
 	display: none;
-	
+
+}
+.modal-title {
+    font-size: 30px;
+}
+.modal-content {
+    text-align: center;
+    font-size: 40px;
+}
+
+.modal-footer {
+    text-align: center;
 }
 
 h1 {
@@ -30,37 +41,37 @@ h1 {
 	font-size: 50px;
 }
 
-.animated { 
-    -webkit-animation-duration: 1s; 
-    animation-duration: 1s; 
-    -webkit-animation-fill-mode: both; 
-    animation-fill-mode: both; 
-} 
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
 
-@-webkit-keyframes fadeInDown { 
-    0% { 
-        opacity: 0; 
-        -webkit-transform: translateY(-20px); 
-    } 
-    100% { 
-        opacity: 1; 
-        -webkit-transform: translateY(0); 
-    } 
-} 
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+    }
+}
 
-@keyframes fadeInDown { 
-    0% { 
-        opacity: 0; 
-        transform: translateY(-20px); 
-    } 
-    100% { 
-        opacity: 1; 
-        transform: translateY(0); 
-    } 
-} 
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-.fadeInDown { 
-    -webkit-animation-name: fadeInDown; 
-    animation-name: fadeInDown; 
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
 }
 

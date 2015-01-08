@@ -69,7 +69,17 @@ $(document).ready ( function(){
     gamestate = data.gamestate;
     console.log(data.gameover);
     if(data.gameover !== -1)
+    {
       $('#myModal').modal('show');
+      if(data.gameover === 0)
+        $('.modal-body').text('You Tied');
+      else if(data.gameover === "O" && urlArray.length > 2)
+        $('.modal-body').text('You Won!!');
+      else if(data.gameover === "X" && urlArray.length === 2)
+        $('.modal-body').text('You Won!!');
+      else
+        $('.modal-body').text('You Lost...');
+    }
 
     setBoard();
 
