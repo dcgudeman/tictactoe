@@ -11,6 +11,10 @@ $(document).ready ( function(){
     roomid = urlArray[2];
     socket.emit('joinroom',roomid);
   }
+  else
+  {
+    socket.emit('newgame');
+  }
 
 
   var gamestate = "         ";
@@ -30,33 +34,11 @@ $(document).ready ( function(){
   $('.cell').each(function(index, element){
 
     $(element).on('click',function(event){
-      console.log("index is", index);
-      console.log($(element).text());
+      //console.log("index is", index);
+      //console.log($(element).text());
       if($(element).text() === "")
       {
         socket.emit('choice', {gamestate: gamestate, index: index, whosTurn: whosTurn});
-/*        $.ajax({
-          type: "POST",
-          url:"http://localhost:3000",
-          dataType: "json",
-          data: {
-            index: index,
-            gamestate: gamestate
-          }
-        }).then(
-        function(data, textStatus, jqXHR){
-          console.log(data);
-          console.log("success");
-
-          gamestate = data.gamestate;
-
-          setBoard();
-
-        },
-        function(jqXHR, textStatus, errorThrown){
-          console.log(errorThrown);
-          console.log("error");
-        });*/
       }
 
     });
@@ -64,10 +46,10 @@ $(document).ready ( function(){
 
   socket.on('gotnewboard', function (data) {
 
-    console.log(data);
+    //console.log(data);
     whosTurn = data.whosTurn;
     gamestate = data.gamestate;
-    console.log(data.gameover);
+    //console.log(data.gameover);
     if(data.gameover !== -1)
     {
       $('#myModal').modal('show');

@@ -92,8 +92,12 @@ game.on('connection',function(socket){
   var whosTurn = 1;
 
 
+  console.log(socket);
 
-  io.emit('opengame', {id: socket.id});
+  socket.on('newgame',function(){
+    io.emit('opengame', {id: socket.id});
+  });
+
 
   socket.on('joinroom',function(roomid){
     socket.join(roomid);
@@ -143,10 +147,6 @@ game.on('connection',function(socket){
 });
 
 
-
-
-
-
 io.on('connection', function(socket){
 
 
@@ -160,24 +160,50 @@ app.get("/", function(req,res){
 
   var clients = findClientsSocket(null, '/game');
 
-  res.render('index',{clients: clients});
+  var rooms = clients.map(function(client){
+    return client.rooms;
+  });
+
+  var firstplayers = rooms.filter(function(element){
+      return element.length === 1;
+  });
+
+  var secondplayers = rooms.filter(function(element){
+      return element.length === 2;
+  });
+
+  var opengames = firstplayers.filter(function(element){
+    var bool = true;
+    secondplayers.forEach(function(e){
+      if(element[0] === e[1])
+        bool = false;
+    });
+    return bool;
+  });
+
+  opengames = opengames.map(function(element){return element[0];});
+
+
+  console.log("opengames",opengames);
+
+
+
+
+  res.render('index',{opengames: opengames});
 });
 
 
 app.get("/newgame",function(req,res){
 
-  res.render('game', {newgame: true});
+  res.render('game',{newgame:true});
 });
 
 app.get("/game/:roomid", function(req,res){
+  //var roomid = req.params.roomid;
+  //var clients = findClientsSocket(roomid, '/game');
+  //console.log(clients);
 
-  var roomid = req.params.roomid;
-
-  var clients = findClientsSocket(roomid, '/game');
-
-  console.log(clients);
-
-  res.render('game');
+  res.render('game',{newgame:false});
 });
 
 
