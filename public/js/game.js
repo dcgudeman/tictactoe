@@ -36,7 +36,7 @@ $(document).ready ( function(){
     });
   };
   $('#myModal').on('hidden.bs.modal', function (e) {
-    window.location.pathname = "/";
+    window.location.replace("/");
   });
 
 

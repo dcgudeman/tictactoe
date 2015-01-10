@@ -14,6 +14,15 @@ app.use(express.static(__dirname + '/public'));
 
 var usercount = 0;
 
+var printGame = function(gameVar,score){
+  var readable = gameVar.replace(/ /gi,"*");
+  console.log(readable.substring(0,3), score);
+  console.log(readable.substring(3,6));
+  console.log(readable.substring(6));
+  console.log("\n");
+
+};
+
 var findClientsSocket = function (roomId, namespace) {
     var res = [];
     var ns = io.of(namespace || "/");    // the default namespace is "/"
@@ -88,7 +97,7 @@ var valueAssigner = function(gameVar,choiceIndex,depth){
   //console.log(depth);
   if(depth%2 === 0)
   {
-    console.log(gameVar);
+    //console.log(gameVar);
     newGameVar = gameVar.substring(0,choiceIndex) + "O" + gameVar.substring(choiceIndex+1);
   }
   else
@@ -100,9 +109,9 @@ var valueAssigner = function(gameVar,choiceIndex,depth){
   var isGameOver = gameStatus(newGameVar);
 
   if(isGameOver === "O")
-    return (1)*Math.pow(0.5, depth);
+    return (10)*Math.pow(0.01, depth);
   else if(isGameOver === "X")
-    return (-1)*Math.pow(0.5, depth);
+    return (-10)*Math.pow(0.01, depth);
   else if(isGameOver === 0)
     return 0;
   else
@@ -133,6 +142,8 @@ var computerChoiceMaker = function(gameVar){
       {
         bestChoice = i;
         valueOfCurrentChoice = valueAssigner(gameVar,i,0);
+        printGame(gameVar.substring(0,bestChoice) + "O" + gameVar.substring(bestChoice+1),valueOfCurrentChoice);
+        //console.log(valueOfCurrentChoice);
       }
       else
       {
@@ -140,6 +151,8 @@ var computerChoiceMaker = function(gameVar){
 
         //console.log("value", temp);
         //console.log("gameVar", gameVar);
+        printGame(gameVar.substring(0,i) + "O" + gameVar.substring(i+1),temp);
+        //console.log(temp);
 
         if(temp > valueOfCurrentChoice)
         {
@@ -148,7 +161,10 @@ var computerChoiceMaker = function(gameVar){
         }
       }
     }
+
   }
+
+  console.log("----------------------------------------------------");
 
   return bestChoice;
 };
@@ -162,7 +178,7 @@ game.on('connection',function(socket){
   var whosTurn = 1;
 
 
-  console.log(socket);
+  //console.log(socket);
 
   socket.on('newgame',function(){
     io.emit('opengame', {id: socket.id});
@@ -180,10 +196,10 @@ game.on('connection',function(socket){
     firstPlayer = firstPlayer[0];
 
 
-    console.log(firstPlayer);
+    //console.log(firstPlayer);
     firstPlayer.emit('start');
     //game.sockets;
-    console.log("success");
+    //console.log("success");
   });
 
 
@@ -206,7 +222,7 @@ game.on('connection',function(socket){
     {
       gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
       whosTurn++;
-      console.log(whosTurn);
+      //console.log(whosTurn);
       gameover = gameStatus(gameVar);
       game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
     }
@@ -214,7 +230,7 @@ game.on('connection',function(socket){
     {
       gameVar = data.gamestate.substring(0,index) + "O" + data.gamestate.substring(index+1);
       whosTurn++;
-      console.log(whosTurn);
+      //console.log(whosTurn);
       gameover = gameStatus(gameVar);
       game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
     }
@@ -227,7 +243,7 @@ game.on('connection',function(socket){
     var gameover = -1;
     var index = parseInt(data.index);
     whosTurn = data.whosTurn;
-    console.log(whosTurn%2);
+    //console.log(whosTurn%2);
     if(whosTurn%2 === 1)
     {
       gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
@@ -324,7 +340,7 @@ app.get("/", function(req,res){
   opengames = opengames.map(function(element){return element[0];});
 
 
-  console.log("opengames",opengames);
+  //console.log("opengames",opengames);
 
 
 
