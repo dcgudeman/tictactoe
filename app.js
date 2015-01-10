@@ -5,6 +5,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var game = io.of('/game');
+var computerNs = io.of('/computer');
 app.set('view engine', 'ejs');
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -169,9 +170,56 @@ var computerChoiceMaker = function(gameVar){
   return bestChoice;
 };
 
+computerNs.on('connection',function(socket){
+  var gameVar = "         ";
+  var whosTurn = 1;
 
+
+  socket.on('computerchoice', function (data) {
+    var roomsArray = socket.rooms;
+    var roomid = roomsArray[0];
+    var gameover = -1;
+    var index = parseInt(data.index);
+    whosTurn = data.whosTurn;
+    //console.log(whosTurn%2);
+    if(whosTurn%2 === 1)
+    {
+      gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
+      whosTurn++;
+      gameover = gameStatus(gameVar);
+
+      if(gameover !== -1)
+      {
+        computerNs.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+      }
+      else
+      {
+        var optChoice = computerChoiceMaker(gameVar);
+        gameVar = gameVar.substring(0,optChoice) + "O" + gameVar.substring(optChoice+1);
+        whosTurn++;
+        gameover = gameStatus(gameVar);
+        computerNs.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+      }
+    }
+
+  });
+
+
+
+
+
+
+
+  socket.on('disconnect', function () {
+    console.log("game user disconnected");
+  });
+});
 
 game.on('connection',function(socket){
+
+  socket.occupied = false;
+
+  console.log(socket);
 
 
   var gameVar = "         ";
@@ -195,11 +243,9 @@ game.on('connection',function(socket){
     });
     firstPlayer = firstPlayer[0];
 
-
-    //console.log(firstPlayer);
+    firstPlayer.occupied = true;
     firstPlayer.emit('start');
-    //game.sockets;
-    //console.log("success");
+
   });
 
 
@@ -237,7 +283,7 @@ game.on('connection',function(socket){
 
   });
 
-  socket.on('computerchoice', function (data) {
+/*  socket.on('computerchoice', function (data) {
     var roomsArray = socket.rooms;
     var roomid = roomsArray[0];
     var gameover = -1;
@@ -264,40 +310,12 @@ game.on('connection',function(socket){
       }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // if(whosTurn%2 === 1 && roomsArray.length === 1)
-    // {
-    //   gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
-    //   whosTurn++;
-    //   console.log(whosTurn);
-    //   gameover = gameStatus(gameVar);
-    //   game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
-    // }
-    // else if(whosTurn%2 === 0 && roomsArray.length === 2)
-    // {
-    //   gameVar = data.gamestate.substring(0,index) + "O" + data.gamestate.substring(index+1);
-    //   whosTurn++;
-    //   console.log(whosTurn);
-    //   gameover = gameStatus(gameVar);
-    //   game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
-    // }
-
-  });
+  });*/
 
 
   socket.on('disconnect', function () {
+    //io.emit('closegame',{roomid: socket.id});
+
     console.log("game user disconnected");
   });
 });
@@ -316,6 +334,11 @@ app.get("/", function(req,res){
 
   var clients = findClientsSocket(null, '/game');
 
+  clients = clients.filter(function(element){
+    console.log(element);
+      return !element.occupied;
+  });
+
   var rooms = clients.map(function(client){
     return client.rooms;
   });
@@ -331,7 +354,8 @@ app.get("/", function(req,res){
   var opengames = firstplayers.filter(function(element){
     var bool = true;
     secondplayers.forEach(function(e){
-      if(element[0] === e[1])
+      console.log(element[0].occupied);
+      if(element[0] === e[1] && !element[0].occupied)
         bool = false;
     });
     return bool;

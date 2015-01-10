@@ -2,7 +2,7 @@
 
 $(document).ready ( function(){
 
-  var socket = io('/game');
+  var socket = io('/computer');
   var urlArray = window.location.pathname.split("/");
   var roomid = "";
   var gamestate = "         ";
