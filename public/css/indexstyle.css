@@ -48,3 +48,16 @@ h1 {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
 }
+
+
+#left {
+  height: 300px;
+}
+
+#center {
+  height: 150px;
+}
+
+#right {
+  height: 300px;
+}

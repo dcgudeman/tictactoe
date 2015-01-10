@@ -29,15 +29,21 @@
 <div class="main text-center container">
 
 <div class="row">
-  <div class="col-xs-4 thumbnail cell">
+  <div id="left" class="col-xs-4 thumbnail cell">
+    <h4>Open Games</h4>
+    <hr>
     <ul id="opengames">
       <% opengames.forEach(function(element){ %>
         <li><a href=<%= "/game/"+element %> ><%= element  %></a></li>
       <% }); %>
     </ul>
   </div>
-  <div class="col-xs-4 thumbnail cell">This is my very own implimentation of Tic Tac Toe. You have the choice of playing another person or playing against the computer.</div>
-  <div class="col-xs-4 thumbnail cell"><a href="/newgame" class="btn btn-default newgame">NEW GAME</a><a href="" class="btn btn-default client">TEST</a></div>
+  <div id="center" class="col-xs-4 thumbnail cell">This is my very own implimentation of Tic Tac Toe. You have the choice of playing another person or playing against the computer.</div>
+  <div id="right" class="col-xs-4 thumbnail cell">
+    <h4>Start a new game</h4>
+    <p><a href="/newgame" class="btn btn-default newgame">NEW GAME</a></p>
+    <p><a href="" class="btn btn-default client">TEST</a></p>
+  </div>
 </div>
 
 </div>
