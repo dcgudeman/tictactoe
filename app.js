@@ -99,9 +99,20 @@ game.on('connection',function(socket){
   });
 
 
+
+
   socket.on('joinroom',function(roomid){
     socket.join(roomid);
     io.emit('closegame',{roomid:roomid});
+    var firstPlayer = game.sockets.filter(function(element){
+      return element.id === roomid;
+    });
+    firstPlayer = firstPlayer[0];
+
+
+    console.log(firstPlayer);
+    firstPlayer.emit('start');
+    //game.sockets;
     console.log("success");
   });
 

@@ -5,6 +5,8 @@ $(document).ready ( function(){
   var socket = io('/game');
   var urlArray = window.location.pathname.split("/");
   var roomid = "";
+  var gamestate = "         ";
+  var whosTurn = 0;
 
   if(urlArray.length > 2)
   {
@@ -13,12 +15,16 @@ $(document).ready ( function(){
   }
   else
   {
+    $("#status").text("Waiting for another player to join your game....");
     socket.emit('newgame');
   }
 
+  socket.on('start',function(){
+    whosTurn = 1;
+  });
 
-  var gamestate = "         ";
-  var whosTurn = 1;
+
+
 
   var setBoard = function(){
     $('.cell').each(function(index, element){
@@ -34,9 +40,7 @@ $(document).ready ( function(){
   $('.cell').each(function(index, element){
 
     $(element).on('click',function(event){
-      //console.log("index is", index);
-      //console.log($(element).text());
-      if($(element).text() === "")
+      if($(element).text() === "" && whosTurn !== 0)
       {
         socket.emit('choice', {gamestate: gamestate, index: index, whosTurn: whosTurn});
       }
@@ -49,6 +53,16 @@ $(document).ready ( function(){
     //console.log(data);
     whosTurn = data.whosTurn;
     gamestate = data.gamestate;
+
+    console.log(whosTurn);
+
+    if(whosTurn !== 0 && whosTurn%2 === 0 && urlArray.length > 2)
+      $("#status").text("Your turn");
+    else if(whosTurn !== 0 && whosTurn%2 === 1 && urlArray.length === 2)
+      $("#status").text("Your turn");
+    else if(whosTurn !== 0)
+      $("#status").text("It's your opponents turn");
+
     //console.log(data.gameover);
     if(data.gameover !== -1)
     {
