@@ -12,6 +12,7 @@ $(document).ready ( function(){
   {
     roomid = urlArray[2];
     socket.emit('joinroom',roomid);
+    $("#status").text("It's your opponents turn");
   }
   else
   {
@@ -21,6 +22,8 @@ $(document).ready ( function(){
 
   socket.on('start',function(){
     whosTurn = 1;
+    $("#status").text("Your turn");
+
   });
 
 
