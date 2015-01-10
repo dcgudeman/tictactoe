@@ -5,10 +5,14 @@ $(document).ready ( function(){
 
   socket.on('opengame', function (data) {
     $('#opengames').append(
-      $('<li>').append(
+      $('<li>').attr('id', data.id).append(
         $('<a>').attr('href','/game/'+data.id).append(data.id)
         )
       );
+  });
+
+  socket.on('closegame', function (data) {
+    $( "#"+data.roomid ).remove();
   });
 
  $(".client").on('click',function(event){

@@ -101,6 +101,7 @@ game.on('connection',function(socket){
 
   socket.on('joinroom',function(roomid){
     socket.join(roomid);
+    io.emit('closegame',{roomid:roomid});
     console.log("success");
   });
 
