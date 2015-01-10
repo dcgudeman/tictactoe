@@ -52,12 +52,28 @@ h1 {
 
 #left {
   height: 300px;
+  padding: 20px;
 }
 
 #center {
   height: 150px;
+  padding: 20px;
 }
 
 #right {
   height: 300px;
+  padding: 20px;
+}
+
+.text {
+  float: left;
+  margin-bottom: 40px;
+}
+
+.newgamebutton {
+  float: right;
+}
+
+.holder {
+
 }
