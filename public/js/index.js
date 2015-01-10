@@ -15,12 +15,12 @@ $(document).ready ( function(){
     $( "#"+data.roomid ).remove();
   });
 
- $(".client").on('click',function(event){
-    event.preventDefault();
-    //socket.emit('clients');
-    console.log(socket);
-    var r = window.confirm("sometext");
-    console.log(r);
-  });
+ // $(".client").on('click',function(event){
+ //    event.preventDefault();
+ //    //socket.emit('clients');
+ //    console.log(socket);
+ //    var r = window.confirm("sometext");
+ //    console.log(r);
+ //  });
 
 });

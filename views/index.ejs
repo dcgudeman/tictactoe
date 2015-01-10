@@ -30,7 +30,7 @@
 
 <div class="row">
   <div id="left" class="col-xs-4 thumbnail cell">
-    <h4>Open Games</h4>
+    <h4>OPEN GAMES</h4>
     <hr>
     <ul id="opengames">
       <% opengames.forEach(function(element){ %>
@@ -40,13 +40,13 @@
   </div>
   <div id="center" class="col-xs-4 thumbnail cell">This is my very own implimentation of Tic Tac Toe. You have the choice of playing another person or playing against the computer.</div>
   <div id="right" class="col-xs-4 thumbnail cell">
-    <h4>Start a new game</h4>
+    <h4>START A NEW GAME</h4>
     <hr>
     <div class="holder">
-      <p class="text">Play against another person: </p><a href="/newgame" class="btn btn-default newgame newgamebutton">NEW GAME</a>
+      <p class="text">Play against another person: </p><a href="/newgame?player=human" class="btn btn-default newgame newgamebutton">NEW GAME</a>
     </div>
     <div class="holder">
-      <p class="text">Play against the computer: </p><a href="" class="btn btn-default client newgamebutton">NEW GAME</a>
+      <p class="text">Play against the computer: </p><a href="/newgame?player=computer" class="btn btn-default client newgamebutton">NEW GAME</a>
     </div>
   </div>
 </div>

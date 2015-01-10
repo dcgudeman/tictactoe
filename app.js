@@ -83,6 +83,76 @@ var gameStatus = function(gamestate) {
 
 };
 
+var valueAssigner = function(gameVar,choiceIndex,depth){
+  var newGameVar = "";
+  //console.log(depth);
+  if(depth%2 === 0)
+  {
+    console.log(gameVar);
+    newGameVar = gameVar.substring(0,choiceIndex) + "O" + gameVar.substring(choiceIndex+1);
+  }
+  else
+  {
+    //console.log("player choice");
+    newGameVar = gameVar.substring(0,choiceIndex) + "X" + gameVar.substring(choiceIndex+1);
+  }
+
+  var isGameOver = gameStatus(newGameVar);
+
+  if(isGameOver === "O")
+    return (1)*Math.pow(0.5, depth);
+  else if(isGameOver === "X")
+    return (-1)*Math.pow(0.5, depth);
+  else if(isGameOver === 0)
+    return 0;
+  else
+  {
+    var newDepth = depth + 1;
+    var sum = 0;
+    for(var i = 0; i < newGameVar.length; i++)
+    {
+      if(newGameVar[i] === " ")
+      {
+        sum = sum + valueAssigner(newGameVar,i,newDepth);
+      }
+    }
+
+    return sum;
+  }
+};
+
+var computerChoiceMaker = function(gameVar){
+  var bestChoice = -1;
+  var valueOfCurrentChoice = 0;
+
+  for(var i = 0; i < gameVar.length; i++)
+  {
+    if(gameVar[i] === " ")
+    {
+      if(bestChoice === -1)
+      {
+        bestChoice = i;
+        valueOfCurrentChoice = valueAssigner(gameVar,i,0);
+      }
+      else
+      {
+        var temp = valueAssigner(gameVar,i,0);
+
+        //console.log("value", temp);
+        //console.log("gameVar", gameVar);
+
+        if(temp > valueOfCurrentChoice)
+        {
+          bestChoice = i;
+          valueOfCurrentChoice = temp;
+        }
+      }
+    }
+  }
+
+  return bestChoice;
+};
+
 
 
 game.on('connection',function(socket){
@@ -151,6 +221,64 @@ game.on('connection',function(socket){
 
   });
 
+  socket.on('computerchoice', function (data) {
+    var roomsArray = socket.rooms;
+    var roomid = roomsArray[0];
+    var gameover = -1;
+    var index = parseInt(data.index);
+    whosTurn = data.whosTurn;
+    console.log(whosTurn%2);
+    if(whosTurn%2 === 1)
+    {
+      gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
+      whosTurn++;
+      gameover = gameStatus(gameVar);
+
+      if(gameover !== -1)
+      {
+        game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+      }
+      else
+      {
+        var optChoice = computerChoiceMaker(gameVar);
+        gameVar = gameVar.substring(0,optChoice) + "O" + gameVar.substring(optChoice+1);
+        whosTurn++;
+        gameover = gameStatus(gameVar);
+        game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // if(whosTurn%2 === 1 && roomsArray.length === 1)
+    // {
+    //   gameVar = data.gamestate.substring(0,index) + "X" + data.gamestate.substring(index+1);
+    //   whosTurn++;
+    //   console.log(whosTurn);
+    //   gameover = gameStatus(gameVar);
+    //   game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+    // }
+    // else if(whosTurn%2 === 0 && roomsArray.length === 2)
+    // {
+    //   gameVar = data.gamestate.substring(0,index) + "O" + data.gamestate.substring(index+1);
+    //   whosTurn++;
+    //   console.log(whosTurn);
+    //   gameover = gameStatus(gameVar);
+    //   game.to(roomid).emit('gotnewboard', {gamestate: gameVar, whosTurn: whosTurn, gameover: gameover});
+    // }
+
+  });
 
 
   socket.on('disconnect', function () {
@@ -206,8 +334,12 @@ app.get("/", function(req,res){
 
 
 app.get("/newgame",function(req,res){
+  var computergame = false;
+  if(req.query.player === "computer")
+    computergame = true;
 
-  res.render('game',{newgame:true});
+
+  res.render('game',{computergame: computergame});
 });
 
 app.get("/game/:roomid", function(req,res){
@@ -215,7 +347,7 @@ app.get("/game/:roomid", function(req,res){
   //var clients = findClientsSocket(roomid, '/game');
   //console.log(clients);
 
-  res.render('game',{newgame:false});
+  res.render('game',{computergame: false});
 });
 
 
