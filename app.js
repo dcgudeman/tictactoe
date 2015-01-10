@@ -226,8 +226,6 @@ game.on('connection',function(socket){
   var whosTurn = 1;
 
 
-  //console.log(socket);
-
   socket.on('newgame',function(){
     io.emit('opengame', {id: socket.id});
   });
