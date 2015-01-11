@@ -95,6 +95,12 @@ var gameStatus = function(gamestate) {
 
 var valueAssigner = function(gameVar,choiceIndex,depth){
   var newGameVar = "";
+  var getMaxOfArray = function (numArray) {
+    return Math.max.apply(null, numArray);
+  };
+  var getMinOfArray = function (numArray) {
+    return Math.min.apply(null, numArray);
+  };
   //console.log(depth);
   if(depth%2 === 0)
   {
@@ -110,24 +116,29 @@ var valueAssigner = function(gameVar,choiceIndex,depth){
   var isGameOver = gameStatus(newGameVar);
 
   if(isGameOver === "O")
-    return (10)*Math.pow(0.01, depth);
+    return (10);
   else if(isGameOver === "X")
-    return (-10)*Math.pow(0.01, depth);
+    return (-10);
   else if(isGameOver === 0)
     return 0;
   else
   {
+
     var newDepth = depth + 1;
-    var sum = 0;
+    var choices = [];
     for(var i = 0; i < newGameVar.length; i++)
     {
       if(newGameVar[i] === " ")
       {
-        sum = sum + valueAssigner(newGameVar,i,newDepth);
+        choices.push(valueAssigner(newGameVar,i,newDepth));
       }
     }
 
-    return sum;
+    if(newDepth%2 === 0)
+      return getMaxOfArray(choices);
+    else
+      return getMinOfArray(choices);
+
   }
 };
 
