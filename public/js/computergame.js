@@ -40,6 +40,8 @@ $(document).ready ( function(){
 
   });
 
+  $("#status").text("Your turn");
+
 
   $('.cell').each(function(index, element){
 
@@ -61,12 +63,12 @@ $(document).ready ( function(){
 
     console.log(whosTurn);
 
-    if(whosTurn !== 0 && whosTurn%2 === 0 && urlArray.length > 2)
+/*    if(whosTurn !== 0 && whosTurn%2 === 0 && urlArray.length > 2)
       $("#status").text("Your turn");
     else if(whosTurn !== 0 && whosTurn%2 === 1 && urlArray.length === 2)
       $("#status").text("Your turn");
     else if(whosTurn !== 0)
-      $("#status").text("It's your opponents turn");
+      $("#status").text("It's your opponents turn");*/
 
     //console.log(data.gameover);
     if(data.gameover !== -1)
