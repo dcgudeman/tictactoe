@@ -39,6 +39,10 @@ $(document).ready ( function(){
     window.location.replace("/");
   });
 
+  socket.on("redirect",function(){
+    window.location.replace("/");
+  });
+
 
   $('.cell').each(function(index, element){
 

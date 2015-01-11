@@ -234,7 +234,19 @@ game.on('connection',function(socket){
 
 
   socket.on('joinroom',function(roomid){
-    socket.join(roomid);
+
+    var sockets = findClientsSocket(roomid,"/game");
+
+    console.log(sockets.length);
+
+    if(sockets.length === 1)
+    {
+     socket.join(roomid);
+    }
+    else
+    {
+      socket.emit("redirect");
+    }
     io.emit('closegame',{roomid:roomid});
     var firstPlayer = game.sockets.filter(function(element){
       return element.id === roomid;
