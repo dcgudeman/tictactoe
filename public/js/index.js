@@ -6,7 +6,7 @@ $(document).ready ( function(){
   socket.on('opengame', function (data) {
     $('#opengames').append(
       $('<li>').attr('id', data.id).append(
-        $('<a>').attr('href','/game/'+data.id).append(data.id)
+        $('<a>').attr('href','/game/'+data.id).attr('class','btn btn-primary btn-lg opengame').append(data.id)
         )
       );
   });
