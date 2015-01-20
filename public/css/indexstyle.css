@@ -55,7 +55,7 @@ ul{
 
 
 #left {
-  height: 300px;
+  height: 100%;
   padding: 20px;
 }
 
@@ -135,13 +135,6 @@ ul{
     padding: 0;
   }
 
-/*  .btntext{
-    display: inline;
-    position: relative;
-    vertical-align: middle;
-    margin: 0px auto;
-
-  }*/
 }
 
 
